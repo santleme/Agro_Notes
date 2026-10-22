@@ -4,6 +4,7 @@ nav:
     - Vocabulário e modelo rural: product/domain-br/README.md
   - User Guide:
     - Introduction: guide/index.md
+    - "Fazenda mista: lavoura e pecuária": guide/mixed-farm.md
     - Mapping locations: guide/mapping.md
     - Managing assets: guide/assets.md
     - Logging events: guide/logs.md
@@ -66,6 +67,7 @@ nav:
     - Installing: hosting/install.md
     - Updating: hosting/update.md
     - Docker: hosting/docker.md
+    - Demonstração local: hosting/local-preview.md
     - Composer: hosting/composer.md
     - Pre-built: hosting/prebuilt.md
     - Email: hosting/email.md
