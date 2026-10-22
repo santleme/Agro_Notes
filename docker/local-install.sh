@@ -53,6 +53,8 @@ else
 fi
 
 "$drush" pm:install \
+  farm_l10n \
+  farm_pt_br \
   farm_activity \
   farm_animal \
   farm_birth \
@@ -68,6 +70,18 @@ fi
   farm_seeding \
   farm_transplanting \
   -y
+
+# Add pt-br before downloading upstream translations.
+"$drush" php:eval 'if (!\Drupal::languageManager()->getLanguage("pt-br")) { \Drupal\language\Entity\ConfigurableLanguage::createFromLangcode("pt-br")->save(); }'
+"$drush" config:set language.negotiation selected_langcode pt-br -y
+"$drush" locale:check -y
+"$drush" locale:update --langcodes=pt-br -y
+"$drush" locale:import pt-br /opt/farm-profile/modules/core/l10n_pt_br/translations/pt-br.po --type=customized --override=all -y
+"$drush" php:script /opt/farm-profile/docker/import-pt-br-config.php
+
+# Match Brazilian date formatting in local previews.
+"$drush" config:set system.date country.default BR -y
+"$drush" config:set core.date_format.short pattern 'd/m/Y' -y
 
 # This anonymous access is restricted to the loopback-only local preview.
 # It is not part of the farmOS profile or a production installation.
