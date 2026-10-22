@@ -28,6 +28,11 @@ class ThemeHooks {
         'view' => 'dashboard_test_view',
         'view_display_id' => 'user_list',
       ],
+      'dashboard_map' => [
+        'title' => $this->t('Dashboard map placeholder'),
+        'block' => 'dashboard_test_block',
+        'region' => 'top',
+      ],
     ];
   }
 
