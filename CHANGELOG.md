@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add a local-only Docker preview and guide for mixed crop and livestock farms.
+
 This release updates Drupal core to 11.4, which introduces a change to some
 normalization method signatures. If you maintain a module that extends any of
 the Drupal core or farmOS normalization classes, you may need to update your
