@@ -42,8 +42,8 @@ módulos do farmOS quando a operação precisar:
 - **Acesso à API, integrações e camadas de mapa externas:** habilite somente
   quando uma integração ou provedor for escolhido.
 
-Essas opções habilitam módulos existentes do farmOS. A demonstração local em
-Docker descrita no [README do Docker](../../docker/README.md) instala o mesmo
+Essas opções habilitam módulos existentes do farmOS. A
+[demonstração local em Docker](../hosting/local-preview.md) instala o mesmo
 conjunto inicial; o acesso sem login fica restrito a essa demonstração local de
 uma pessoa e não faz parte da autenticação normal do farmOS nem da configuração
 de produção.
