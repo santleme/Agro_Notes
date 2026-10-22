@@ -15,15 +15,23 @@ médicos, atividades e movimentações. A senha administrativa é gerada
 aleatoriamente e não é exibida. Se precisar entrar como administradora, redefina
 a senha com Drush.
 
+O instalador concede ao papel anônimo permissões de criação e edição por tipo
+de ativo e registro que estiver habilitado. Ele reaplica essas permissões ao ser
+executado novamente, inclusive em sites locais já instalados. Para atualizar
+uma instalação existente, execute:
+
+    docker compose -p farmos-local -f docker/docker-compose.local.yml run --rm install
+
 ## Limites de acesso
 
 O serviço web fica vinculado a `127.0.0.1`. Para atender ao fluxo local sem
 tela de login, esta demonstração concede acesso anônimo à criação e gestão de
 registros de ativos, atividades e quantidades; as alterações ficam sem
 atribuição a uma pessoa. As páginas de login e recuperação de senha redirecionam
-ao painel. Não exponha esta configuração à rede nem a use em produção. Uma
-instalação de produção mantém autenticação normal e escolhe módulos pelo
-assistente de configuração do farmOS.
+ao painel. Rotas negadas mantêm o status de acesso negado, mas exibem o painel
+sem formulário de login. Não exponha esta configuração à rede nem a use em
+produção. Uma instalação de produção mantém autenticação normal e escolhe
+módulos pelo assistente de configuração do farmOS.
 
 Arquivos e banco de dados ficam em `docker/local/`, pasta ignorada pelo Git.
 Para parar os serviços:
