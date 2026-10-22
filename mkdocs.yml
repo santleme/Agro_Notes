@@ -1,5 +1,7 @@
 site_name: farmOS Docs
 nav:
+  - Adaptação brasileira:
+    - Vocabulário e modelo rural: product/domain-br/README.md
   - User Guide:
     - Introduction: guide/index.md
     - Mapping locations: guide/mapping.md
