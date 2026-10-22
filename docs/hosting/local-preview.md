@@ -9,7 +9,8 @@ Na raiz do repositório, execute:
     mkdir -p docker/local/www docker/local/db
     docker compose -p farmos-local -f docker/docker-compose.local.yml up -d
 
-Na primeira inicialização, o instalador cria o site e habilita módulos para
+Na primeira inicialização, o instalador cria o site, seleciona português do
+Brasil para a interface, usa `d/m/Y` para datas curtas e habilita módulos para
 áreas, plantas, animais, semeadura, transplante, colheita, nascimento, registros
 médicos, atividades e movimentações. A senha administrativa é gerada
 aleatoriamente e não é exibida. Se precisar entrar como administradora, redefina
