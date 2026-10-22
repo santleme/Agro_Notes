@@ -60,6 +60,8 @@ class DashboardTest extends FarmBrowserTestBase {
     $this->drupalGet('/dashboard');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Sua fazenda começa aqui');
+    $this->assertSession()->pageTextContains('Cadastre a primeira área');
+    $this->assertSession()->pageTextNotContains('Localize a propriedade');
     $this->assertSession()->pageTextContains('0 de 3 etapas concluídas');
     $this->assertSession()->pageTextContains('Nenhuma área cadastrada ainda.');
     $this->assertSession()->pageTextContains('0 áreas, 0 animais e 0 plantas cadastrados');

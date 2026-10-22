@@ -218,8 +218,8 @@ class DashboardController extends ControllerBase {
         '#attributes' => ['class' => ['farm-dashboard-start__steps']],
         'property' => $this->buildStep(
           1,
-          $this->t('Localize a propriedade'),
-          $this->t('Cadastre a propriedade e, se quiser, desenhe seus limites para organizar os talhões.'),
+          $this->t('Cadastre a primeira área'),
+          $this->t('Comece registrando a propriedade ou outra área da fazenda. Os limites no mapa podem ser desenhados depois.'),
           $land_count ? $this->formatPlural($land_count, '1 área cadastrada', '@count áreas cadastradas') : $this->t('Nenhuma área cadastrada ainda.'),
           $land_count > 0,
           [
