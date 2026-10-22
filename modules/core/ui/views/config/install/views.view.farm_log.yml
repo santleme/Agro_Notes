@@ -4,6 +4,7 @@ dependencies:
   config:
     - system.menu.admin
     - taxonomy.vocabulary.log_category
+    - views.view.farm_people
   module:
     - entity_reference_revisions
     - farm_entity_access

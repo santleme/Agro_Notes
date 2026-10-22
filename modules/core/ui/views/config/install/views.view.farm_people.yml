@@ -1021,6 +1021,9 @@ display:
         operator: AND
         groups:
           1: AND
+      access:
+        type: none
+        options: {  }
       style:
         type: entity_reference
         options:
@@ -1035,6 +1038,7 @@ display:
           separator: '-'
           hide_empty: false
       defaults:
+        access: false
         fields: false
         sorts: false
         filters: false

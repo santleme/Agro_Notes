@@ -4,6 +4,7 @@ dependencies:
   config:
     - image.style.thumbnail
     - organization.type.farm
+    - views.view.farm_people
   module:
     - asset
     - farm_entity_access
