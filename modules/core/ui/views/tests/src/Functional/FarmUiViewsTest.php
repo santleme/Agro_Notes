@@ -97,6 +97,10 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
    */
   public function doTestAssetViews() {
 
+    $people_view = \Drupal\views\Views::getView('farm_people');
+    $this->assertNotFalse($people_view);
+    $this->assertTrue($people_view->access('entity_reference'));
+
     // Create two assets of different types.
     $equipment = Asset::create([
       'name' => 'Equipment asset',
@@ -112,6 +116,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     // Check that both assets are visible in /assets.
     $this->drupalGet('/assets');
     $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains('The reference view farm_people cannot be found.');
     $this->assertSession()->pageTextContains($equipment->label());
     $this->assertSession()->pageTextContains($water->label());
 
@@ -157,6 +162,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     // Check that /logs and /logs/activity include the "Test string" column.
     $this->drupalGet('/logs');
     $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains('The reference view farm_people cannot be found.');
     $this->assertSession()->pageTextContains('Test string');
     $this->drupalGet('/logs/activity');
     $this->assertSession()->statusCodeEquals(200);

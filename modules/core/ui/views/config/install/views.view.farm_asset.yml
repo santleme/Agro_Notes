@@ -4,6 +4,7 @@ dependencies:
   config:
     - image.style.thumbnail
     - system.menu.admin
+    - views.view.farm_people
   module:
     - asset
     - entity_browser

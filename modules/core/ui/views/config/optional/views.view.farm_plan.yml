@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - system.menu.admin
+    - views.view.farm_people
   module:
     - farm_entity_access
     - options
