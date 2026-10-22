@@ -53,6 +53,8 @@ else
 fi
 
 "$drush" pm:install \
+  farm_l10n \
+  farm_pt_br \
   farm_activity \
   farm_animal \
   farm_birth \
@@ -69,11 +71,43 @@ fi
   farm_transplanting \
   -y
 
+# Add pt-br before downloading upstream translations.
+"$drush" php:eval 'if (!\Drupal::languageManager()->getLanguage("pt-br")) { \Drupal\language\Entity\ConfigurableLanguage::createFromLangcode("pt-br")->save(); }'
+"$drush" config:set language.negotiation selected_langcode pt-br -y
+"$drush" locale:check -y
+"$drush" locale:update --langcodes=pt-br -y
+"$drush" locale:import pt-br /opt/farm-profile/modules/core/l10n_pt_br/translations/pt-br.po --type=customized --override=all -y
+"$drush" php:script /opt/farm-profile/docker/import-pt-br-config.php
+
+# Match Brazilian date formatting in local previews.
+"$drush" config:set system.date country.default BR -y
+"$drush" config:set core.date_format.short pattern 'd/m/Y' -y
+
 # This anonymous access is restricted to the loopback-only local preview.
 # It is not part of the farmOS profile or a production installation.
 "$drush" role:perm:add anonymous \
   'access content,access farm dashboard,access asset overview,access asset collection,administer assets,view any asset,access log overview,access log collection,administer log,view any log,access quantity collection,administer quantity,access locations overview' \
   -y
+
+# farmOS grants create and update access per entity bundle. The broad
+# "administer" permissions above do not replace these route-level permissions.
+# Query installed bundles so the same setup covers the enabled modules on both
+# fresh and existing local sites.
+"$drush" php:eval '
+$role = \Drupal\user\Entity\Role::load("anonymous");
+foreach (["asset_type" => "asset", "log_type" => "log"] as $bundle_type => $entity_type) {
+  $bundles = \Drupal::entityTypeManager()->getStorage($bundle_type)->loadMultiple();
+  foreach ($bundles as $bundle) {
+    $role->grantPermission("create " . $bundle->id() . " " . $entity_type);
+    $role->grantPermission("update any " . $bundle->id() . " " . $entity_type);
+  }
+}
+$role->save();
+'
+
+# The normal farmOS 403 page includes a login form for anonymous visitors.
+# Keep denied routes on a login-free page in this loopback-only installation.
+"$drush" config:set system.site page.403 / -y
 "$drush" cr
 
 printf '\n%s\n\n' 'farmOS local mixed-farm mode is ready. Open the dashboard at http://localhost.'

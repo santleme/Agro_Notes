@@ -41,6 +41,17 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
    */
   public function onMapRender(MapRenderEvent $event) {
 
+    // Location and asset list maps need an explanation when there are no
+    // geometries to display. Keep this off maps used for editing geometry or
+    // the dashboard.
+    if (in_array($event->getMapType()->id(), ['locations', 'asset_list'])) {
+      $settings[$event->getMapTargetId()]['empty_state'] = [
+        'title' => $this->t('No locations to show yet'),
+        'message' => $this->t('Add a location asset or draw a boundary to see it on this map. Use the Add location action above.'),
+      ];
+      $event->addSettings($settings);
+    }
+
     // Add behaviors/settings to default and geofield maps.
     if (in_array($event->getmapType()->id(), ['default', 'geofield'])) {
 

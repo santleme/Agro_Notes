@@ -20,9 +20,9 @@ class ThemeHooks {
   #[Hook('toolbar_alter')]
   public function toolbarAlter(&$items) {
 
-    // Rename home item to "Dashboard".
+    // Rename home item to "Início".
     if (!empty($items['home'])) {
-      $items['home']['tab']['#title'] = $this->t('Dashboard');
+      $items['home']['tab']['#title'] = $this->t('Início');
     }
   }
 

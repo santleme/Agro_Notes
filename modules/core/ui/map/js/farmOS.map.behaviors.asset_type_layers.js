@@ -2,6 +2,49 @@
   farmOS.map.behaviors.asset_type_layers = {
     attach: function (instance) {
 
+      const vectorLayers = [];
+      const emptyState = instance.farmMapSettings.empty_state;
+      let completedLayerLoads = 0;
+      let layerLoadFailed = false;
+
+      const showEmptyState = function () {
+        if (!emptyState || instance.map.getTargetElement().querySelector('.farm-map__empty-state')) {
+          return;
+        }
+
+        const state = document.createElement('div');
+        state.className = 'farm-map__empty-state';
+        state.setAttribute('role', 'status');
+
+        const title = document.createElement('h2');
+        title.textContent = emptyState.title;
+        state.appendChild(title);
+
+        const message = document.createElement('p');
+        message.textContent = emptyState.message;
+        state.appendChild(message);
+
+        instance.map.getTargetElement().appendChild(state);
+      };
+
+      const finishLayerLoading = function (failed = false) {
+        completedLayerLoads++;
+        layerLoadFailed = layerLoadFailed || failed;
+
+        if (completedLayerLoads !== vectorLayers.length) {
+          return;
+        }
+
+        const features = vectorLayers.reduce((count, layer) => count + layer.layer.getSource().getFeatures().length, 0);
+        if (features > 0) {
+          if (vectorLayers.some((layer) => layer.zoom)) {
+            instance.zoomToVectors();
+          }
+        } else if (!layerLoadFailed) {
+          showEmptyState();
+        }
+      };
+
       // Check if there are asset type layers to add.
       if (instance.farmMapSettings.asset_type_layers !== undefined) {
 
@@ -76,14 +119,28 @@
 
           var newLayer = instance.addLayer(layerType, opts);
 
-          // If zoom is true, zoom to the layer vectors.
-          // Do not zoom to cluster layers.
-          if (layerType !== 'cluster' && layer.zoom !== undefined && layer.zoom) {
-            var source = newLayer.getSource();
-            source.on('change', function () {
-              instance.zoomToVectors();
+          // Track geometry sources so that maps zoom to the combined extent
+          // once all asset layers have loaded and can show a useful empty state.
+          if (layerType === 'geojson' || layerType === 'cluster') {
+            vectorLayers.push({
+              layer: newLayer,
+              zoom: layerType !== 'cluster' && layer.zoom === true,
             });
           }
+        });
+      }
+
+      if (vectorLayers.length === 0) {
+        showEmptyState();
+      } else {
+        vectorLayers.forEach(function (layer) {
+          const source = layer.layer.getSource();
+          source.once('featuresloadend', function () {
+            finishLayerLoading();
+          });
+          source.once('featuresloaderror', function () {
+            finishLayerLoading(true);
+          });
         });
       }
 
