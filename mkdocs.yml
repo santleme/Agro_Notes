@@ -2,6 +2,7 @@ site_name: farmOS Docs
 nav:
   - User Guide:
     - Introduction: guide/index.md
+    - Fazenda mista: lavoura e pecuária: guide/mixed-farm.md
     - Mapping locations: guide/mapping.md
     - Managing assets: guide/assets.md
     - Logging events: guide/logs.md
