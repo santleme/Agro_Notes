@@ -2,6 +2,9 @@
 
 This describes how to enable translations in farmOS.
 
+For setup guidance in Brazilian Portuguese, see
+[Localização em português do Brasil](/hosting/localization-pt-br).
+
 1. Enable the **farmOS Localization** (`farm_l10n`) module.
 2. Add your desired language and download translations.
     1. Go to Administration > Configuration > Regional and language > Languages.

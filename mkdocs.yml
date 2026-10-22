@@ -70,6 +70,7 @@ nav:
     - Pre-built: hosting/prebuilt.md
     - Email: hosting/email.md
     - Translations: hosting/localization.md
+    - Localização (português do Brasil): hosting/localization-pt-br.md
     - v1 Migration: hosting/migration.md
 theme:
   name: material
